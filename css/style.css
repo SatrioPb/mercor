@@ -1,0 +1,67 @@
+body {
+  font-family: "Poppins";
+}
+#banner {
+  background: linear-gradient(rgba(139, 132, 132, 0.703), rgba(39, 55, 78, 0.89)), url(pelabuhan1.jpg);
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+}
+
+#banner-caption {
+  color: white;
+  margin-bottom: 19rem;
+  opacity: none;
+}
+.footer-top {
+  padding-top: 80px;
+  padding-bottom: 30px;
+}
+
+.footer-bottom {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+footer .footer-links a,
+footer .social-icons a {
+  color: #898fa1;
+}
+
+footer .social-icons a {
+  font-size: 24px;
+}
+
+footer .footer-links a {
+  display: block;
+  font-weight: 400;
+}
+
+footer .social-icons a:hover,
+footer .footer-links a:hover {
+  color: #162e6e;
+}
+.btn {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: 0;
+  color: white;
+  background-color: #4169e1;
+}
+
+.btn {
+  background-color: #162e6e;
+  color: #fff;
+  z-index: 1;
+}
+
+.btn:hover {
+  background-color: white;
+  color: #fff;
+}
