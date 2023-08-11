@@ -193,7 +193,7 @@ include "connect.php";
 
                 <div class="row d-flex flex-wrap">
                     <?php
-                    $query = "SELECT * FROM album";
+                    $query = "SELECT * FROM album ORDER BY date DESC";
                     $result = mysqli_query($con, $query);
                     $count = 0;
 
@@ -204,7 +204,7 @@ include "connect.php";
                         $count++;
                     ?>
 
-                        <div class="col-md-4">
+                        <div class="crd col-md-4">
                             <div class="card shadow-sm" style="height: 100%;">
                                 <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="foto/<?php echo $data['foto']; ?>" alt="">
                                 <div class="card-body d-flex flex-column">

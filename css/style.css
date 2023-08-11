@@ -65,3 +65,11 @@ footer .footer-links a:hover {
   background-color: white;
   color: #fff;
 }
+
+.crd {
+  transition: 0.4s;
+}
+.crd:hover {
+  transform: scale(1.02);
+  box-shadow: #5a5a5a;
+}

@@ -43,24 +43,24 @@ include "connect.php";
     <br>
     <main class="container">
         <?php
-        $query = "SELECT * FROM album";
+        $query = "SELECT * FROM album ORDER BY date DESC";
         $result = mysqli_query($con, $query);
 
         while ($data = mysqli_fetch_assoc($result)) {
-
-
         ?>
-            <div class="row mb-4">
+            <div class="crd row mb-4">
                 <div class="col-md-12">
-                    <div class="card flex-md-row mb-4 shadow-sm h-md-250"> <!-- Menghapus class 'border rounded overflow-hidden' karena sudah ada class 'card' -->
-                        <div class="col-md-4"> <!-- Kolom gambar -->
-                            <img src="foto/<?php echo $data['foto']; ?>" class="card-img" alt="..." width="300" height="200">
+                    <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+                        <div class="col-md-3">
+                            <img src="foto/<?php echo $data['foto']; ?>" class="card-img img-fluid h-100" alt="...">
                         </div>
-                        <div class="col-md-8 d-flex flex-column justify-content-between"> <!-- Kolom teks -->
+                        <div class="col-md-9 d-flex flex-column justify-content-between">
                             <div class="card-body">
                                 <h2 class="card-title"><?php echo $data['judul']; ?></h2>
                                 <p class="card-text mb-3"><?php echo substr($data['deskripsi'], 0, 300); ?>...</p>
-                                <p class="card-text"><small class="text-muted"><?= $data['date'] ?></small></p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted"><?= $data['date'] ?></small>
                             </div>
                         </div>
                     </div>
@@ -70,6 +70,9 @@ include "connect.php";
         }
         ?>
     </main>
+
+
+
 
     <footer class=" text-light" style="background-color: #27374D;" id="bottom">
         <div class=" footer-top">
