@@ -1,33 +1,17 @@
 <?php
-include "connect.php";
+// We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
     header('Location: index.php');
     include "authenticate.php";
-    $query = mysqli_query($koneksi, "SELECT * FROM mercor");
+    $query = mysqli_query($con, "SELECT * FROM company");
     exit;
 }
-
-
-
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    // echo "Received ID: " . $kd_barang;
-} else {
-    $errorMessage = mysqli_error($con);
-
-    // Display the error message
-    echo "Error: " . $errorMessage;
-}
-
-$query = "SELECT * FROM album WHERE id=$id";
-$result = mysqli_query($con, $query);
-$data = mysqli_fetch_array($result);
 ?>
-
-
-
+<?php
+include "connect.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +43,7 @@ $data = mysqli_fetch_array($result);
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Ditya Plavon</div>
+                <div class="sidebar-brand-text mx-3">PT. MERCOR INDONESIA</div>
             </a>
 
             <!-- Divider -->
@@ -98,6 +82,7 @@ $data = mysqli_fetch_array($result);
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Tambah Expertise</span></a>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider" />
 
@@ -119,13 +104,14 @@ $data = mysqli_fetch_array($result);
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="tmb_brg.php">Tambah Barang</a>
-                        <a class="collapse-item" href="hapus.php">Action Barang</a>
+                        <a class="collapse-item" href="form_album.php">Tambah Blog</a>
+                        <a class="collapse-item" href="action.php">Action Barang</a>
                     </div>
                 </div>
             </li> -->
 
             <!-- Nav Item - Charts -->
+
 
             <!-- Nav Item - Tables -->
 
@@ -203,15 +189,10 @@ $data = mysqli_fetch_array($result);
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="profile.php">   
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a> -->
-                                <a class="dropdown-item" href="index.php">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Company
-                                </a>
-
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -236,50 +217,31 @@ $data = mysqli_fetch_array($result);
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Edit Blog</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Tambah expertise</h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
 
 
                                     <div class="body">
-                                        <form action="edit.php?id=<?= $data['id'] ?>" method="POST" enctype="multipart/form-data">
-                                            <label for="judul">Judul</label>
+
+                                        <form action="input_exp.php" method="POST" enctype="multipart/form-data">
+
+                                            <label for="">Judul</label>
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" name="judul" id="judul" maxlength="128" size="50" value="<?= $data['judul'] ?>" />
+                                                    <input type="text" name="judul" class="form-control form-control-user" id="judul" aria-describedby="emailHelp" required />
                                                 </div>
                                             </div>
 
-                                            <label for="deskripsi">Deskripsi</label>
+                                            <label for="">Deskripsi</label>
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <textarea name="deskripsi" id="deskripsi" rows="6" class="form-control"><?= $data['deskripsi'] ?></textarea>
+                                                    <textarea name="deskripsi" id="deskripsi" rows="6" class="form-control"></textarea>
                                                 </div>
                                             </div>
-
-
-                                            <label for="date">Tanggal</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="date" name="date" id="date" maxlength="128" size="50" value="<?= $data['date'] ?>" />
-                                                </div>
-                                            </div>
-
-                                            <label for="foto">Foto</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="file" name="foto" id="foto" /> <!-- Field untuk mengunggah gambar baru -->
-                                                    <input type="hidden" name="old_foto" value="<?= $data['foto'] ?>" /> <!-- Simpan nama gambar lama -->
-                                                </div>
-                                            </div>
-
-                                            <input type="submit" name="Edit" value="Edit" />&nbsp;
-                                            <input type="reset" value="Reset">
+                                            <input type="submit" value="Tambah" class="btn btn-primary btn-user btn-block">
                                         </form>
-
-
-
 
                                     </div>
                                     <!-- /.container-fluid -->

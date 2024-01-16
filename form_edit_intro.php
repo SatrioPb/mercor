@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
     echo "Error: " . $errorMessage;
 }
 
-$query = "SELECT * FROM album WHERE id=$id";
+$query = "SELECT * FROM intro WHERE id=$id";
 $result = mysqli_query($con, $query);
 $data = mysqli_fetch_array($result);
 ?>
@@ -59,7 +59,7 @@ $data = mysqli_fetch_array($result);
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Ditya Plavon</div>
+                <div class="sidebar-brand-text mx-3">Mercor Indonesia</div>
             </a>
 
             <!-- Divider -->
@@ -243,7 +243,7 @@ $data = mysqli_fetch_array($result);
 
 
                                     <div class="body">
-                                        <form action="edit.php?id=<?= $data['id'] ?>" method="POST" enctype="multipart/form-data">
+                                        <form action="edit_intro.php?id=<?= $data['id'] ?>" method="POST" enctype="multipart/form-data">
                                             <label for="judul">Judul</label>
                                             <div class="form-group">
                                                 <div class="form-line">
@@ -259,12 +259,7 @@ $data = mysqli_fetch_array($result);
                                             </div>
 
 
-                                            <label for="date">Tanggal</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="date" name="date" id="date" maxlength="128" size="50" value="<?= $data['date'] ?>" />
-                                                </div>
-                                            </div>
+
 
                                             <label for="foto">Foto</label>
                                             <div class="form-group">

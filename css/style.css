@@ -2,7 +2,7 @@ body {
   font-family: "Poppins";
 }
 #banner {
-  background: linear-gradient(rgba(139, 132, 132, 0.703), rgba(39, 55, 78, 0.89)), url(pelabuhan1.jpg);
+  background: linear-gradient(rgba(139, 132, 132, 0.703), rgba(39, 55, 78, 0.89)), url(bg.png);
   min-height: 100vh;
   background-size: cover;
   background-position: center;
@@ -72,4 +72,17 @@ footer .footer-links a:hover {
 .crd:hover {
   transform: scale(1.02);
   box-shadow: #5a5a5a;
+}
+.map-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%; /* Rasio aspek 16:9 */
+  position: relative;
+  height: 0;
+}
+.map-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }

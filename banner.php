@@ -12,7 +12,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 <?php
 include "connect.php";
-$album = $con->query("SELECT COUNT(id) FROM album");
+$album = $con->query("SELECT COUNT(id) FROM expertise");
 $totalbarang = $album->fetch_row()[0];
 ?>
 
@@ -85,7 +85,6 @@ $totalbarang = $album->fetch_row()[0];
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Tambah Expertise</span></a>
             </li>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider" />
@@ -230,7 +229,7 @@ $totalbarang = $album->fetch_row()[0];
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Data Blog </div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Data expertise </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php
                                                                                                     echo "<h2>$totalbarang</h2>";
                                                                                                     ?></div>
@@ -257,44 +256,61 @@ $totalbarang = $album->fetch_row()[0];
                             <h6 class="m-0 font-weight-bold text-primary">Data Blog</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <?php
-                                $query = "SELECT * FROM album ORDER BY date DESC";
-                                $result = mysqli_query($con, $query);
-
-                                while ($data = mysqli_fetch_assoc($result)) {
-                                ?>
-
-                                    <div class="crd row mb-4">
-                                        <div class="col-md-12">
-                                            <div class="card flex-md-row mb-4 shadow-sm h-md-250">
-                                                <div class="col-md-3">
-                                                    <img src="foto/<?php echo $data['foto']; ?>" class="card-img img-fluid h-100" alt="...">
-                                                </div>
-                                                <div class="col-md-9 d-flex flex-column justify-content-between">
-                                                    <div class="card-body">
-                                                        <h2 class="card-title"><?php echo $data['judul']; ?></h2>
-                                                        <p class="card-text mb-3"><?php echo substr($data['deskripsi'], 0, 300); ?>...</p>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <div class="mt-auto d-flex justify-content-between align-items-center">
-                                                            <small class="text-body-secondary text-end"><?php echo $data['date']; ?></small>
-                                                            <div class="btn-group">
-                                                                <a onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" href="hapus.php?id=<?php echo $data['id']; ?> " class="btn btn-danger">Hapus</a>
-                                                                <a href="form_edit.php?id=<?= $data['id']; ?>" class="btn btn-success">Edit</a>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="container mt-5">
+                                <div class="text-center mb-4">
+                                    <h1>Legal information</h1>
+                                </div>
+                                <div class="entry-content">
+                                    <div class="info-box">
+                                        <h4 class="mb-4">NPWP</h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>NPWP :</strong> 03.129.235.2-801.000</li>
+                                            <li><strong>Address :</strong> RUKO GRAND CENTRAL BTP, M, B4, TAMALANREA, TAMALANREA, KOTA MAKASSAR, SULAWESI SELATAN, 90245</li>
+                                            <li><strong>Registered Date :</strong> 21/04/2011</li>
+                                        </ul>
                                     </div>
-
-
-                                <?php
-                                }
-                                ?>
+                                    <div class="info-box">
+                                        <h4 class="mb-4">NIB</h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>NOMOR INDUK BERUSAHA :</strong> 9120305272877</li>
+                                            <li><strong>Nama Pelaku Usaha :</strong> PT MERCOR INDONESIA</li>
+                                            <li><strong>Alamat Kantor :</strong> Ruko Grand Central BTP Blok M No. B4 Tamalnrea , Desa/Kelurahan Tamalanrea, Kec. Tamalanrea, Kota Makassar, Provinsi Sulawesi Selatan, Kode Pos: 90245</li>
+                                            <li><strong>No. Telepon :</strong> 8123027885</li>
+                                            <li><strong>Email :</strong> mercor_indonesia@yahoo.com</li>
+                                            <li><strong>Status Penanaman Modal :</strong> PMDN</li>
+                                        </ul>
+                                    </div>
+                                    <div class="info-box">
+                                        <h4 class="mb-4">SNI ISO 9001 | 2015 Quality Management System - Requirements</h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>Certificate Reg. Number :</strong> QMS231101</li>
+                                            <li><strong>Initial Certification Date :</strong> 02 March 2023</li>
+                                            <li><strong>Certificate Issued Date :</strong> 02 March 2023</li>
+                                            <li><strong>Certification Validity Date :</strong> 01 March 2026</li>
+                                            <li><strong>*Certificate Expiry Date :</strong> 01 March 2024</li>
+                                        </ul>
+                                    </div>
+                                    <div class="info-box">
+                                        <h4 class="mb-4">SNI ISO 14001 | 2015 Environmental Management System - Requirements</h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>Certificate Reg. Number :</strong> EMS230457</li>
+                                            <li><strong>Initial Certification Date :</strong> 02 March 2023</li>
+                                            <li><strong>Certificate Issued Date :</strong> 02 March 2023</li>
+                                            <li><strong>Certification Validity Date :</strong> 01 March 2026</li>
+                                            <li><strong>*Certificate Expiry Date :</strong> 01 March 2024</li>
+                                        </ul>
+                                    </div>
+                                    <div class="info-box">
+                                        <h4 class="mb-4">SNI ISO 45001 | 2018 Occupational Health and Safety Management Systems – Requirements</h4>
+                                        <ul class="list-unstyled">
+                                            <li><strong>Certificate Reg. Number :</strong> OHSMS238007</li>
+                                            <li><strong>Initial Certification Date :</strong> 02 March 2023</li>
+                                            <li><strong>Certificate Issued Date :</strong> 02 March 2023</li>
+                                            <li><strong>Certification Validity Date :</strong> 01 March 2026</li>
+                                            <li><strong>*Certificate Expiry Date :</strong> 01 March 2024</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

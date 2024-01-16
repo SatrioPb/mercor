@@ -2,6 +2,19 @@
 <html lang="en">
 <?php
 include "connect.php";
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    // echo "Received ID: " . $id;
+} else {
+    $errorMessage = mysqli_error($con);
+
+    // Display the error message
+    echo "Error: " . $errorMessage;
+}
+
+$query = "SELECT * FROM album WHERE id =$id ";
+$result = mysqli_query($con, $query);
+$data = mysqli_fetch_array($result);
 ?>
 
 <head>
@@ -29,9 +42,7 @@ include "connect.php";
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup" style="padding-right: 5rem;">
                 <div class="navbar-nav ">
                     <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                    <a class="nav-link" href="#top">top</a>
-                    <a class="nav-link" href="#bottom">bottom</a>
-
+                    <a class="nav-link" href="blog.php">Back</a>
                 </div>
             </div>
         </div>
@@ -41,48 +52,18 @@ include "connect.php";
     <br>
     <br>
     <br>
-    <main class="container">
-        <?php
-        $query = "SELECT * FROM album ORDER BY date DESC";
-        $result = mysqli_query($con, $query);
-
-        while ($data = mysqli_fetch_assoc($result)) {
-        ?>
-            <a href="detail.php?id='<?= $data['id']; ?>'" style="text-decoration: none; color:black;">
-                <div class="crd row mb-4">
-                    <div class="col-md-12">
-                        <div class="card flex-md-row mb-4 shadow-sm h-md-250">
-                            <div class="col-md-3">
-                                <img src="foto/<?php echo $data['foto']; ?>" class="card-img img-fluid h-100" alt="...">
-                            </div>
-                            <div class="col-md-9 d-flex flex-column justify-content-between">
-                                <div class="card-body">
-                                    <h2 class="card-title"><?php echo $data['judul']; ?></h2>
-                                    <p class="card-text mb-3"><?php echo substr($data['deskripsi'], 0, 300); ?>...</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <small class="text-body-secondary text-end"><?php echo $data['date']; ?></small>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-        <?php
-        }
-        ?>
-    </main>
-
-
-
-
+    <div class="container  d-flex justify-content-center align-items-center">
+        <div class="card mb-4">
+            <img src="foto/<?php echo $data['foto']; ?>" class="card-img-top img-fluid rounded" style=" width: 100%;  " alt="...">
+            <div class="card-body">
+                <h2 class="card-title"><?php echo $data['judul']; ?></h2>
+                <p class="card-text"><?php echo $data['deskripsi']; ?></p>
+            </div>
+            <div class="card-footer text-muted">
+                <?= $data['date'] ?>
+            </div>
+        </div>
+    </div>
     <footer class=" text-light" style="background-color: #27374D;" id="bottom">
         <div class=" footer-top">
             <div class="container">

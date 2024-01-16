@@ -1,33 +1,20 @@
 <?php
-include "connect.php";
+// We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
     header('Location: index.php');
     include "authenticate.php";
-    $query = mysqli_query($koneksi, "SELECT * FROM mercor");
+    $query = mysqli_query($con, "SELECT * FROM mercor");
     exit;
 }
-
-
-
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    // echo "Received ID: " . $kd_barang;
-} else {
-    $errorMessage = mysqli_error($con);
-
-    // Display the error message
-    echo "Error: " . $errorMessage;
-}
-
-$query = "SELECT * FROM album WHERE id=$id";
-$result = mysqli_query($con, $query);
-$data = mysqli_fetch_array($result);
 ?>
 
-
-
+<?php
+include "connect.php";
+$album = $con->query("SELECT COUNT(id) FROM expertise");
+$totalbarang = $album->fetch_row()[0];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +26,7 @@ $data = mysqli_fetch_array($result);
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Mercor Indonesia</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -59,7 +46,7 @@ $data = mysqli_fetch_array($result);
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Ditya Plavon</div>
+                <div class="sidebar-brand-text mx-3">PT. MERCOR INDONESIA</div>
             </a>
 
             <!-- Divider -->
@@ -98,6 +85,7 @@ $data = mysqli_fetch_array($result);
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Tambah Expertise</span></a>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider" />
 
@@ -119,8 +107,9 @@ $data = mysqli_fetch_array($result);
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="tmb_brg.php">Tambah Barang</a>
+                        <a class="collapse-item" href="form_album.php">Tambah blog</a>
                         <a class="collapse-item" href="hapus.php">Action Barang</a>
+
                     </div>
                 </div>
             </li> -->
@@ -154,11 +143,11 @@ $data = mysqli_fetch_array($result);
                     </button>
 
                     <!-- Topbar Search -->
-                    <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="cari.php" method="get">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                            <input type="text" name="cari" id="cari" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2 " />
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" type="button" value="cari">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -176,7 +165,7 @@ $data = mysqli_fetch_array($result);
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." />
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -203,7 +192,7 @@ $data = mysqli_fetch_array($result);
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="profile.php">   
+                                <!-- <a class="dropdown-item" href="profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a> -->
@@ -228,112 +217,126 @@ $data = mysqli_fetch_array($result);
                     <!-- Page Heading -->
                     <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <a href="print.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50">
+                            </i> Generate Report</a>
                     </div> -->
 
                     <!-- Content Row -->
-                    <div class="container-fluid">
+                    <div class="row">
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Edit Blog</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-
-
-                                    <div class="body">
-                                        <form action="edit.php?id=<?= $data['id'] ?>" method="POST" enctype="multipart/form-data">
-                                            <label for="judul">Judul</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" name="judul" id="judul" maxlength="128" size="50" value="<?= $data['judul'] ?>" />
-                                                </div>
-                                            </div>
-
-                                            <label for="deskripsi">Deskripsi</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <textarea name="deskripsi" id="deskripsi" rows="6" class="form-control"><?= $data['deskripsi'] ?></textarea>
-                                                </div>
-                                            </div>
-
-
-                                            <label for="date">Tanggal</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="date" name="date" id="date" maxlength="128" size="50" value="<?= $data['date'] ?>" />
-                                                </div>
-                                            </div>
-
-                                            <label for="foto">Foto</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="file" name="foto" id="foto" /> <!-- Field untuk mengunggah gambar baru -->
-                                                    <input type="hidden" name="old_foto" value="<?= $data['foto'] ?>" /> <!-- Simpan nama gambar lama -->
-                                                </div>
-                                            </div>
-
-                                            <input type="submit" name="Edit" value="Edit" />&nbsp;
-                                            <input type="reset" value="Reset">
-                                        </form>
-
-
-
-
-                                    </div>
-                                    <!-- /.container-fluid -->
-                                </div>
-                                <!-- End of Main Content -->
-
-                                <!-- Footer -->
-
-                                <!-- End of Footer -->
-                            </div>
-                            <!-- End of Content Wrapper -->
-                        </div>
-                        <!-- End of Page Wrapper -->
-
-                        <!-- Scroll to Top Button-->
-                        <a class="scroll-to-top rounded" href="#page-top">
-                            <i class="fas fa-angle-up"></i>
-                        </a>
-
-                        <!-- Logout Modal-->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                        <a class="btn btn-primary" href="logout.php">Logout</a>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Data expertise </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php
+                                                                                                    echo "<h2>$totalbarang</h2>";
+                                                                                                    ?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bootstrap core JavaScript-->
-                        <script src="vendor/jquery/jquery.min.js"></script>
-                        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                        <!-- Core plugin JavaScript-->
-                        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                        <!-- Custom scripts for all pages-->
-                        <script src="js/sb-admin-2.min.js"></script>
 
-                        <!-- Page level plugins -->
-                        <script src="vendor/chart.js/Chart.min.js"></script>
+                        <!-- Content Row -->
 
-                        <!-- Page level custom scripts -->
-                        <script src="js/demo/chart-area-demo.js"></script>
-                        <script src="js/demo/chart-pie-demo.js"></script>
+
+                        <!-- Approach -->
+
+                    </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Data Blog</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="container my-5 px-4 py-5 " id="hanging-icons">
+                                <h1 class="display-5 fw-bold text-dark">Our Expertise</h1>
+                                <hr style="height: 4px; border: none; background-color: black" />
+                                <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                                    <?php
+                                    $query = "SELECT * FROM expertise";
+                                    $result = mysqli_query($con, $query);
+
+                                    while ($data = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h2 class="card-title"><?php echo $data['judul']; ?></h2>
+                                                    <p class="card-text"><?php echo $data['deskripsi']; ?></p>
+                                                    <td> <a onclick="return confirm('Apakah anda yakin akan menghapus data ini?')" href="hapus_exp.php?id=<?php echo $data['id']; ?> " class="btn btn-danger">Hapus</a>
+                                                        <a href="form_edit_exp.php?id=<?= $data['id']; ?>" class="btn btn-success">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 </body>
 
 </html>

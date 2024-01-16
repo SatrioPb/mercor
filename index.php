@@ -36,6 +36,7 @@ include "connect.php";
                     <a class="nav-link active" href="#Introduction">Introduction</a>
                     <a class="nav-link active" href="#Expertise">Expertise</a>
                     <a class="nav-link active" href="blog.php">Blog</a>
+                    <a class="nav-link active" href="iso.html">ISO</a>
                 </div>
             </div>
         </div>
@@ -52,23 +53,31 @@ include "connect.php";
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- banner -->
 
 
         <!-- introduction -->
         <section>
-            <div class="container col-xxl-12 px-4 py-4 pb-1" id="Introduction">
-                <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                    <div class="col-10 col-sm-8 col-lg-6">
-                        <img src="gambar/mercor1.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy" style="border-radius: 10px;">
-                    </div>
-                    <div class="col-lg-6">
-                        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Introduction</h1>
-                        <p class="lead text-justify text-secondary">We are a specialized construction and civil engineering company that excels in providing comprehensive solutions for various maritime infrastructure projects. With our expertise in cathodic protection, wrapping pile HDPE, under deck repair, upper deck repair, replace rubber fender, replace bollard, and the design and build of jetties, we have successfully completed numerous projects in the marine industry. This company profile outlines our capabilities, commitment to quality, and dedication to delivering exceptional results.</p>
+            <?php
+            $query = "SELECT * FROM intro";
+            $result = mysqli_query($con, $query);
+            ?>
+            <?php while ($data = mysqli_fetch_assoc($result)) {
+            ?>
+                <div class="container col-xxl-12 px-4 py-4 pb-1" id="Introduction">
+                    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                        <div class="col-10 col-sm-8 col-lg-6">
+                            <img src="foto/<?php echo $data['foto']; ?>" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy" style="border-radius: 10px;">
+                        </div>
+                        <div class="col-lg-6">
+                            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3"><?php echo $data['judul']; ?></h1>
+                            <p class="lead text-justify text-secondary"><?php echo $data['deskripsi']; ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </section>
 
         <!-- <div class="container my-5">
@@ -85,56 +94,21 @@ include "connect.php";
                 <h1 class="display-5 fw-bold text-dark">Our Expertise</h1>
                 <hr style="height: 4px; border: none; background-color: black" />
                 <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Cathodic Protection</h2>
-                            <p class="text-secondary">We are experienced in implementing cathodic protection systems to mitigate corrosion on submerged or buried structures. Our team of experts ensures the proper installation and maintenance of cathodic protection systems to extend the lifespan of marine structures.</p>
+                    <?php
+                    $query = "SELECT * FROM expertise";
+                    $result = mysqli_query($con, $query);
 
+                    while ($data = mysqli_fetch_assoc($result)) {
+                    ?>
+                        <div class="col d-flex align-items-start">
+                            <div>
+                                <h2><?php echo $data['judul']; ?></h2>
+                                <p class="text-secondary"><?php echo $data['deskripsi']; ?></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Wrapping Pile HDPE</h2>
-                            <p class="text-secondary">We specialize in wrapping pile HDPE to provide corrosion protection for underwater or soil-exposed piles. Our skilled technicians apply high-density polyethylene (HDPE) wraps using advanced techniques, ensuring optimal durability and longevity of the piles.</p>
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Under Deck Repair</h2>
-                            <p class="text-secondary">We have the expertise to conduct under deck repairs, addressing issues such as structural damage, deterioration, or waterproofing problems. Our team utilizes innovative methods and high-quality materials to restore the integrity of under deck areas efficiently and effectively.</p>
-
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Upper Deck Repair</h2>
-                            <p class="text-secondary">Our company excels in upper deck repair, focusing on surface restoration, waterproofing, and structural reinforcement. We apply advanced techniques and durable materials to ensure the safety, durability, and aesthetics of the upper deck areas.</p>
-
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Replace Rubber Fender</h2>
-                            <p class="text-secondary">We possess the necessary skills and experience to replace rubber fenders, an essential component for protecting marine structures from vessel impacts. Our team ensures the precise installation of high-quality rubber fenders to enhance the safety and functionality of the jetties.</p>
-
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Replace Bollard</h2>
-                            <p class="text-secondary">We specialize in replacing bollards, providing secure mooring solutions for vessels. Our team ensures the proper selection, installation, and alignment of bollards to meet the specific requirements of the project and enhance the overall safety and functionality of the marine infrastructure.</p>
-
-                        </div>
-                    </div>
-                    <div class="col d-flex align-items-start">
-                        <div>
-                            <h2>Design and Build Jetty</h2>
-                            <p class="text-secondary">Our company offers comprehensive design and construction services for jetties. We collaborate closely with clients to understand their specific needs and develop custom-designed jetties that meet the highest standards of safety, functionality, and durability.</p>
-
-                        </div>
-                    </div>
-
-
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </section>
@@ -205,20 +179,22 @@ include "connect.php";
                     ?>
 
                         <div class="crd col-md-4">
-                            <div class="card shadow-sm" style="height: 100%;">
-                                <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="foto/<?php echo $data['foto']; ?>" alt="">
-                                <div class="card-body d-flex flex-column">
-                                    <h3 class="card-text"><?php echo $data['judul']; ?></h3>
-                                    <p class="card-text" style="max-height: 100px; overflow: hidden;"><?php echo substr($data['deskripsi'], 0, 100); ?>...</p>
+                            <a href="detail.php?id='<?= $data['id']; ?>'" style="text-decoration: none; color:black;">
+                                <div class="card shadow-sm" style="height: 100%;">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="foto/<?php echo $data['foto']; ?>" alt="">
+                                    <div class="card-body d-flex flex-column">
+                                        <h3 class="card-text"><?php echo $data['judul']; ?></h3>
+                                        <p class="card-text" style="max-height: 100px; overflow: hidden;"><?php echo substr($data['deskripsi'], 0, 100); ?>...</p>
 
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                            </div>
+                                            <small class="text-body-secondary text-end"><?php echo $data['date']; ?></small>
                                         </div>
-                                        <small class="text-body-secondary text-end"><?php echo $data['date']; ?></small>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     <?php
                     }
@@ -286,18 +262,17 @@ include "connect.php";
                         <div class="col-md-4">
                             <h4 class="logo-text">Contact</h4>
                             <div class="footer-links">
-                                <p class="mb">Alamat : Ruko Grand Central BTP Blok M No. B-4 Tamalanrea 90245. Makassar, Sulawesi Selatan, Indonesia.</p>
+                                <p class="mb">Address : Ruko Grand Central BTP Blok M No. B-4 Tamalanrea 90245. Makassar, Sulawesi Selatan, Indonesia.</p>
                                 <p class="mb">Nomor Telephone : (0411) 4774071</p>
                                 <p class="mb">Nomor Fax : (0411) 4774072, 590850</p>
-                                <p class="mb"> Alamat Email : mercor_indonesia@yahoo.com</p>
+                                <p class="mb">Email Address : mercor_indonesia@yahoo.com</p>
                             </div>
                         </div>
 
                         <div class="col-sm-4">
-                            <div class="container end">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13270.066191851465!2d119.49722779390322!3d-5.135415167929812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbefcafb51c6555%3A0xc3f5837f028282f1!2sPT.Mercor%20Indonesia!5e0!3m2!1sid!2sid!4v1690963834952!5m2!1sid!2sid" width="350" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <div class="map-responsive">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13270.066191851465!2d119.49722779390322!3d-5.135415167929812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbefcafb51c6555%3A0xc3f5837f028282f1!2sPT.Mercor%20Indonesia!5e0!3m2!1sid!2sid!4v1690963834952!5m2!1sid!2sid" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
-
                         </div>
 
                     </div>
